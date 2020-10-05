@@ -13,8 +13,12 @@ echo "Trying to enter venv at $VENV_DIR"
 source "$VENV_DIR"/bin/activate
 echo "Successfully entered"
 
-# Installing dependencies for virtual environment
-pip install "pip==20.0.2"
+# Installing system dependencies
+pip install "pip==20.0.2" \
+	"poetry==1.1.0"
+
+# Installing dependencies specified in pyproject.toml file
+poetry install
 
 # Post-install handling
 deactivate
