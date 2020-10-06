@@ -1,5 +1,8 @@
 #!/bin/bash
 
 source .env/bin/activate
-black src/*
+
+isort src
+black src
+
 deactivate
