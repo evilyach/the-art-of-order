@@ -1,0 +1,3 @@
+Settings = {
+    "fps": 60
+}
