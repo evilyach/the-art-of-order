@@ -1,8 +1,10 @@
+import sys
+
 import pygame
 import pygame.locals
-import sys
-from config.textures import Textures
+
 from config.common import Settings
+from config.textures import Textures
 
 
 def main():

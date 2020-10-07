@@ -1,3 +1,1 @@
-Settings = {
-    "fps": 60
-}
+Settings = {"fps": 60}
