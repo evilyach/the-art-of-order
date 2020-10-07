@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "the-art-of-order"
+name = "tao"
 version = "0.1.0"
 description = "The game about order and chaos"
 authors = ["Ilya Chesalin <ilya.chesalin@gmail.com>"]
