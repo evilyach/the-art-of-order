@@ -1,7 +1,7 @@
 ./.env/scripts/activate.ps1
 
 $date = Get-Date -Format "yyyyMMddHHmmss"
-$distpath = '.\dist\windows\build_' + $date
+$distpath = '.\dist\windows\tao_win_0.1.0_build' + $date
 
 pyinstaller --log-level=WARN `
 	--workpath .build `
