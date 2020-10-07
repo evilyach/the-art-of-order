@@ -14,7 +14,7 @@ source "$VENV_DIR"/bin/activate
 echo "Successfully entered"
 
 # Installing system dependencies
-pip install "pip==20.0.2" \
+pip install "pip==20.2.3" \
 	"poetry==1.1.0"
 
 # Installing dependencies specified in pyproject.toml file
