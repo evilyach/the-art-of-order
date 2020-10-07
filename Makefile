@@ -1,8 +1,8 @@
 init-workspace:
-	./scripts/init.sh
+	./scripts/linux/init.sh
 
 lint:
-	./scripts/lint.sh
+	./scripts/linux/lint.sh
 
 build:
-	./scripts/build.sh
+	./scripts/linux/build.sh
