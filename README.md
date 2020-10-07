@@ -6,7 +6,11 @@ More info later!
 
 ## Setup
 
-Before trying to build the game, you need to initialize development environment. In order to do that, run:
+Before trying to build the game, you need to initialize development environment. In order to do that, you need to install system dependencies and run initialization script:
+
+```bash
+sudo apt install python3-pip python3-venv
+```
 
 ```bash
 make init-workspace
