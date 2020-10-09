@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"workbench.tree.indent": 16
+		"workbench.tree.indent": 16,
+		"explorer.compactFolders": false
 	}
 }

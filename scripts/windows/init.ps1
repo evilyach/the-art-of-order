@@ -8,7 +8,7 @@ python.exe -m venv .env
     "poetry==1.1.0"
 
 # Installing dependencies specified in pyproject.toml file
-poetry install
+.\.env\Scripts\python.exe -m poetry install
 
 # Post-install handling
 deactivate

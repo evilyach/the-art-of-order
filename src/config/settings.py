@@ -1,6 +1,6 @@
 VERSION = "0.1.0"
 TITLE = "The Art of Order - v{} (preview build)".format(VERSION)
-FPS = 60
+FPS = 120
 RESOLUTION_X = 1024
 RESOLUTION_Y = 768
 TILESIZE = 32

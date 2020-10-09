@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 import config.colors as colors
@@ -10,7 +12,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(settings.TITLE)
-        pygame.key.set_repeat(500, 100)
+        pygame.key.set_repeat(500, 80)
 
         self.clock = pygame.time.Clock()
         self.screen = screen = pygame.display.set_mode(
@@ -24,7 +26,7 @@ class Game:
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-    
+
         self.player = player.Player(self, 0, 0)
         [world.Block(self, x, 5) for x in range(10, 20)]
 
