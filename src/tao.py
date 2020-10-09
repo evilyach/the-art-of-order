@@ -3,6 +3,7 @@ import pygame
 import config.colors as colors
 import config.settings as settings
 import player
+import world
 
 
 class Game:
@@ -22,7 +23,10 @@ class Game:
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
+        self.walls = pygame.sprite.Group()
+    
         self.player = player.Player(self, 0, 0)
+        [world.Block(self, x, 5) for x in range(10, 20)]
 
     def run(self):
         self.playing = True
