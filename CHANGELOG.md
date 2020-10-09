@@ -14,6 +14,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+
+## [0.2.0] - 2020.10.09
+
+### Added
+
+- Add `Game` class.
+- Add `Player` class.
+- Add generic `Block` class.
+- Add player movement.
+- Add player with block collision.
+
+### Fixed
+
+- Fix `pyproject.toml` for building wheels.
+
+
 ## [0.1.0] - 2020-10-06
 
 ### Added
