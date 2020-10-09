@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "the-art-of-order"
+name = "tao"
 version = "0.1.0"
 description = "The game about order and chaos"
 authors = ["Ilya Chesalin <ilya.chesalin@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.8.2"
+python = "3.8.5"
 pygame = "2.0.0.dev12"
 
 [tool.poetry.dev-dependencies]
