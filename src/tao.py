@@ -32,11 +32,12 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
-        self.player = player.Player(self, 1, 1)
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == "l":
                     world.Block(self, col, row)
+                if tile == "P":
+                    self.player = player.Player(self, 1, 1)
 
     def run(self):
         self.playing = True
