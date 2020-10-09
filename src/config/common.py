@@ -1,1 +1,0 @@
-Settings = {"fps": 60}
