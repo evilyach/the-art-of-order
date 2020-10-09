@@ -1,3 +1,4 @@
+import os
 import sys
 
 import pygame
@@ -21,14 +22,21 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        pass
+        self.map_data = []
+        game_folder = os.path.dirname(__file__)
+        with open(os.path.join(game_folder, settings.MAP_PATH), "rt") as f:
+            for line in f:
+                self.map_data.append(line)
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
-        self.player = player.Player(self, 0, 0)
-        [world.Block(self, x, 5) for x in range(10, 20)]
+        self.player = player.Player(self, 1, 1)
+        for row, tiles in enumerate(self.map_data):
+            for col, tile in enumerate(tiles):
+                if tile == "l":
+                    world.Block(self, col, row)
 
     def run(self):
         self.playing = True
