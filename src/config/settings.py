@@ -1,4 +1,4 @@
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 TITLE = "The Art of Order - v{} (preview build)".format(VERSION)
 FPS = 120
 RESOLUTION_X = 1024
