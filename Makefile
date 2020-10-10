@@ -1,4 +1,4 @@
-init-workspace:
+init:
 	./scripts/linux/init.sh
 
 lint:
