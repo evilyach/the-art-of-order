@@ -2,6 +2,7 @@ import pygame
 
 import config.colors as colors
 import config.settings as settings
+from framework.logger import logger
 
 
 class Player(pygame.sprite.Sprite):
@@ -16,6 +17,8 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.Surface((settings.TILESIZE, settings.TILESIZE))
         self.image.fill(colors.YELLOW)
         self.rect = self.image.get_rect()
+
+        logger.info("Created player at ({}, {})".format(self.x, self.y))
 
     def move(self, dx=0, dy=0):
         if not self.collide(dx, dy):
