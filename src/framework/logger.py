@@ -9,7 +9,9 @@ class Logger:
     def __init__(self, level=logging.DEBUG):
         self.level = level
         self.handler = colorlog.StreamHandler()
-        self.format = "%(asctime)s: %(log_color)s%(message)s%(reset)s"
+
+        self.terminal_format = "%(asctime)s: %(log_color)s%(message)s%(reset)s"
+        self.file_format = "%(asctime)s: %(message)s"
         self.datefmt = "%H:%M:%S %d/%m"
         self.log_colors = {
             "DEBUG": "cyan",
@@ -19,17 +21,25 @@ class Logger:
             "CRITICAL": "red,bg_white",
         }
 
-        self.stream = logging.StreamHandler()
-        self.stream.setLevel(self.level)
-
-        self.formatter = colorlog.ColoredFormatter(
-            self.format, datefmt=self.datefmt, log_colors=self.log_colors
+        self.terminal_formatter = colorlog.ColoredFormatter(
+            self.terminal_format, datefmt=self.datefmt, log_colors=self.log_colors
         )
-        self.stream.setFormatter(self.formatter)
+        self.file_formatter = logging.Formatter(
+            self.file_format, datefmt=self.datefmt,
+        )
+
+        self.terminal_handler = logging.StreamHandler()
+        self.terminal_handler.setLevel(self.level)
+        self.terminal_handler.setFormatter(self.terminal_formatter)
+
+        self.file_handler = logging.FileHandler("logs.txt")
+        self.file_handler.setLevel(self.level)
+        self.file_handler.setFormatter(self.file_formatter)
 
         self.logger = logging.getLogger("root")
         self.logger.setLevel(self.level)
-        self.logger.addHandler(self.stream)
+        self.logger.addHandler(self.terminal_handler)
+        self.logger.addHandler(self.file_handler)
 
         self.print_format = "{} ({}:{}) - {}"
 
