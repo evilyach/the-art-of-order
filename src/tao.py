@@ -7,10 +7,13 @@ import config.colors as colors
 import config.settings as settings
 import player
 import world
+from framework.logger import logger
 
 
 class Game:
     def __init__(self):
+        logger.info("Initializing game")
+
         pygame.init()
         pygame.display.set_caption(settings.TITLE)
         pygame.key.set_repeat(500, 80)
@@ -21,14 +24,25 @@ class Game:
         )
         self.load_data()
 
+        logger.info("Initialized game")
+
     def load_data(self):
+        logger.info("Loading data from {}".format(settings.MAP_PATH))
+
         self.map_data = []
         game_folder = os.path.dirname(__file__)
         with open(os.path.join(game_folder, settings.MAP_PATH), "rt") as f:
             for line in f:
                 self.map_data.append(line)
 
+        if len(self.map_data) == 0:
+            logger.error("Could not load data from from {}".format(settings.MAP_PATH))
+
+        logger.info("Loaded from {}".format(settings.MAP_PATH))
+
     def new(self):
+        logger.info("Initializing new game objects")
+
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
@@ -40,6 +54,8 @@ class Game:
                     self.player = player.Player(self, 1, 1)
 
     def run(self):
+        logger.info("Starting game loop")
+
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(settings.FPS) / 1000
@@ -48,6 +64,8 @@ class Game:
             self.draw()
 
     def quit(self):
+        logger.info("Exiting!")
+
         pygame.quit()
         sys.exit()
 
