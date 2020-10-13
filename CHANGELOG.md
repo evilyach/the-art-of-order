@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- Add `Logger` which can write to terminal and to class.
+
 ### Changed
 ### Deprecated
 ### Removed
