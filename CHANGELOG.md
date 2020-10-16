@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Logger` which can write to terminal and to class.
 
 ### Changed
+
+- Change player movement to be smooth.
+
 ### Deprecated
 ### Removed
 ### Fixed
