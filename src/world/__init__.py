@@ -13,7 +13,7 @@ class World:
 
         with open(self.filename, "rt") as f:
             for line in f:
-                self.data.append(line)
+                self.data.append(line.strip())
 
         if len(self.data) == 0:
             logger.error("Could not load data from from {}".format(settings.MAP_PATH))
