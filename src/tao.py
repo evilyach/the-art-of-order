@@ -6,6 +6,7 @@ import pygame
 import config.colors as colors
 import config.settings as settings
 import player
+import player.camera as player_camera
 import world
 import world.tile.wall as wall
 from framework.logger import logger
@@ -47,6 +48,8 @@ class Game:
                 if tile == "P":
                     self.player = player.Player(self, 1, 1)
 
+        self.camera = player_camera.Camera(self.map.width, self.map.height)
+
     def run(self):
         logger.info("Starting game loop")
 
@@ -64,6 +67,7 @@ class Game:
         sys.exit(0)
 
     def update(self):
+        self.camera.update(self.player)
         self.all_sprites.update()
 
     def draw_grid(self):
@@ -80,7 +84,10 @@ class Game:
     def draw(self):
         self.screen.fill(pygame.Color(colors.BG_COLOR))
         self.draw_grid()
-        self.all_sprites.draw(self.screen)
+
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
+
         pygame.display.flip()
 
     def events(self):
