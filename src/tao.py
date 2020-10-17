@@ -6,7 +6,7 @@ import pygame
 import config.colors as colors
 import config.settings as settings
 import player
-import world
+import world.tile.wall as wall
 from framework.logger import logger
 
 
@@ -49,7 +49,7 @@ class Game:
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == "l":
-                    world.Block(self, col, row)
+                    wall.Wall(self, col, row)
                 if tile == "P":
                     self.player = player.Player(self, 1, 1)
 
