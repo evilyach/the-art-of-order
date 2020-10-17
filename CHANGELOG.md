@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `Logger` which can write to terminal and to class.
+- Add `Camera` that moves around with player.
+- Add option to limit camera scrolling to map size.
 
 ### Changed
 

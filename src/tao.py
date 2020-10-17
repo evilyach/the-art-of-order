@@ -6,7 +6,9 @@ import pygame
 import config.colors as colors
 import config.settings as settings
 import player
+import player.camera as player_camera
 import world
+import world.tile.wall as wall
 from framework.logger import logger
 
 
@@ -18,27 +20,20 @@ class Game:
         pygame.display.set_caption(settings.TITLE)
         pygame.key.set_repeat(500, 80)
 
+        self.game_folder = os.path.dirname(__file__)
         self.clock = pygame.time.Clock()
         self.screen = screen = pygame.display.set_mode(
             (settings.RESOLUTION_X, settings.RESOLUTION_Y)
         )
+
         self.load_data()
 
         logger.info("Initialized game")
 
     def load_data(self):
         logger.info("Loading data from {}".format(settings.MAP_PATH))
-
-        self.map_data = []
-        game_folder = os.path.dirname(__file__)
-        with open(os.path.join(game_folder, settings.MAP_PATH), "rt") as f:
-            for line in f:
-                self.map_data.append(line)
-
-        if len(self.map_data) == 0:
-            logger.error("Could not load data from from {}".format(settings.MAP_PATH))
-
-        logger.info("Loaded from {}".format(settings.MAP_PATH))
+        filename = os.path.join(self.game_folder, settings.MAP_PATH)
+        self.map = world.World(filename)
 
     def new(self):
         logger.info("Initializing new game objects")
@@ -46,12 +41,14 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
-        for row, tiles in enumerate(self.map_data):
+        for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "l":
-                    world.Block(self, col, row)
+                    wall.Wall(self, col, row)
                 if tile == "P":
                     self.player = player.Player(self, 1, 1)
+
+        self.camera = player_camera.Camera(self.map.width, self.map.height)
 
     def run(self):
         logger.info("Starting game loop")
@@ -70,6 +67,7 @@ class Game:
         sys.exit(0)
 
     def update(self):
+        self.camera.update(self.player)
         self.all_sprites.update()
 
     def draw_grid(self):
@@ -86,7 +84,10 @@ class Game:
     def draw(self):
         self.screen.fill(pygame.Color(colors.BG_COLOR))
         self.draw_grid()
-        self.all_sprites.draw(self.screen)
+
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
+
         pygame.display.flip()
 
     def events(self):

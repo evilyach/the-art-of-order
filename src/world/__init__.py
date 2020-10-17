@@ -1,21 +1,26 @@
 import pygame
 
-import config.colors as colors
 import config.settings as settings
+from framework.logger import logger
 
 
-class Block(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.groups = game.all_sprites, game.walls
-        pygame.sprite.Sprite.__init__(self, self.groups)
+class World:
+    def __init__(self, filename):
+        self.filename = filename
 
-        self.game = game
-        self.x = x
-        self.y = y
+        logger.info("Creating world from {}".format(settings.MAP_PATH))
+        self.data = []
 
-        self.image = pygame.Surface((settings.TILESIZE, settings.TILESIZE))
-        self.image.fill(colors.GREEN)
-        self.rect = self.image.get_rect()
+        with open(self.filename, "rt") as f:
+            for line in f:
+                self.data.append(line.strip())
 
-        self.rect.x = self.x * settings.TILESIZE
-        self.rect.y = self.y * settings.TILESIZE
+        if len(self.data) == 0:
+            logger.error("Could not load data from from {}".format(settings.MAP_PATH))
+
+        self.tilewidth = len(self.data[0])
+        self.tileheigth = len(self.data)
+        self.width = self.tilewidth * settings.TILESIZE
+        self.height = self.tileheigth * settings.TILESIZE
+
+        logger.info("Successfully created world from {}".format(settings.MAP_PATH))
