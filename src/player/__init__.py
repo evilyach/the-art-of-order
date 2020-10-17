@@ -1,8 +1,8 @@
 import pygame
 
 import config.colors as colors
-import config.settings as settings
 import config.player as player_settings
+import config.settings as settings
 from framework.logger import logger
 
 
@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
             self.vy *= 0.7071
 
     def collide(self, direction):
-        if direction == 'x':
+        if direction == "x":
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
                 if self.vx > 0:
@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
                 self.vx = 0
                 self.rect.x = self.x
 
-        if direction == 'y':
+        if direction == "y":
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
                 if self.vy > 0:
@@ -76,6 +76,6 @@ class Player(pygame.sprite.Sprite):
         self.y += self.vy * self.game.dt
 
         self.rect.x = self.x
-        self.collide('x')
+        self.collide("x")
         self.rect.y = self.y
-        self.collide('y')
+        self.collide("y")

@@ -25,7 +25,8 @@ class Logger:
             self.terminal_format, datefmt=self.datefmt, log_colors=self.log_colors
         )
         self.file_formatter = logging.Formatter(
-            self.file_format, datefmt=self.datefmt,
+            self.file_format,
+            datefmt=self.datefmt,
         )
 
         self.terminal_handler = logging.StreamHandler()
