@@ -1,6 +1,6 @@
 .env
-.build
+*build
+*dist
 .vscode
 **/__pycache__
-dist
 logs.txt
