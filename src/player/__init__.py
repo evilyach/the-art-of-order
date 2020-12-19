@@ -4,6 +4,7 @@ import config.colors as colors
 import config.player as player_settings
 import config.settings as settings
 from framework.logger import logger
+from framework.spritesheet import SpriteSheet
 
 
 class Player(pygame.sprite.Sprite):
@@ -17,11 +18,57 @@ class Player(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
 
-        self.image = pygame.Surface((settings.TILESIZE, settings.TILESIZE))
-        self.image.fill(colors.YELLOW)
+        filename = "src/static/sprites/character.png"
+        try:
+            self.load_textures(filename)
+        except FileNotFoundError as error:
+            logger.error(f"Could not find character spritesheet at {filename}")
+            exit(-1)
+
+        self.image = self.move_down_textures[0]
         self.rect = self.image.get_rect()
 
         logger.info("Created player at ({}, {})".format(self.x, self.y))
+
+    def load_textures(self, filename):
+        """Load texture set for a character from a filename.
+
+        Keyword arguments:
+        filename (str) -- path to the file, which we load textures from
+
+        Right now the character spritesheet looks like 4 x 4 tileset. We
+        extract 4 sprites for each movement direction.
+        """
+
+        image = SpriteSheet(filename)
+
+        self.move_down_textures = []
+        for x in range(0, 64, 16):
+            sprite = pygame.transform.scale(
+                image.get_image(x, 0, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+            )
+            self.move_down_textures.append(sprite)
+
+        self.move_left_textures = []
+        for x in range(0, 64, 16):
+            sprite = pygame.transform.scale(
+                image.get_image(x, 16, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+            )
+            self.move_left_textures.append(sprite)
+
+        self.move_up_textures = []
+        for x in range(0, 64, 16):
+            sprite = pygame.transform.scale(
+                image.get_image(x, 32, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+            )
+            self.move_up_textures.append(sprite)
+
+        self.move_right_textures = []
+        for x in range(0, 64, 16):
+            sprite = pygame.transform.scale(
+                image.get_image(x, 48, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+            )
+            self.move_right_textures.append(sprite)
 
     def __get_keys(self):
         self.vx = 0
@@ -74,6 +121,21 @@ class Player(pygame.sprite.Sprite):
 
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
+
+        # Update textures
+        if self.vy > 0:
+            frame = (int(self.y) // 30) % len(self.move_down_textures)
+            self.image = self.move_down_textures[frame]
+        elif self.vy < 0:
+            frame = (int(self.y) // 30) % len(self.move_up_textures)
+            self.image = self.move_up_textures[frame]
+
+        if self.vx > 0:
+            frame = (int(self.x) // 30) % len(self.move_right_textures)
+            self.image = self.move_right_textures[frame]
+        elif self.vx < 0:
+            frame = (int(self.x) // 30) % len(self.move_left_textures)
+            self.image = self.move_left_textures[frame]
 
         self.rect.x = self.x
         self.collide("x")
