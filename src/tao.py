@@ -22,9 +22,7 @@ class Game:
 
         self.game_folder = os.path.dirname(__file__)
         self.clock = pygame.time.Clock()
-        self.screen = screen = pygame.display.set_mode(
-            (settings.RESOLUTION_X, settings.RESOLUTION_Y)
-        )
+        self.fullscreen_toggle(fullscreen=True)
 
         self.load_data()
 
@@ -70,20 +68,8 @@ class Game:
         self.camera.update(self.player)
         self.all_sprites.update()
 
-    def draw_grid(self):
-        for x in range(0, settings.RESOLUTION_X, settings.TILESIZE):
-            pygame.draw.line(
-                self.screen, colors.LIGHTGRAY, (x, 0), (x, settings.RESOLUTION_Y)
-            )
-
-        for y in range(0, settings.RESOLUTION_Y, settings.TILESIZE):
-            pygame.draw.line(
-                self.screen, colors.LIGHTGRAY, (0, y), (settings.RESOLUTION_X, y)
-            )
-
     def draw(self):
         self.screen.fill(pygame.Color(colors.BG_COLOR))
-        self.draw_grid()
 
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
@@ -99,11 +85,24 @@ class Game:
                 if event.key == pygame.K_ESCAPE:
                     self.quit()
 
+                if event.key == pygame.K_F11:
+                    if self.fullscreen:
+                        self.fullscreen_toggle(fullscreen=False)
+                    else:
+                        self.fullscreen_toggle(fullscreen=True)
+
     def show_start_screen(self):
         pass
 
     def show_go_screen(self):
         pass
+
+    def fullscreen_toggle(self, fullscreen=True):
+        self.fullscreen = fullscreen
+        if self.fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((settings.RESOLUTION_X, settings.RESOLUTION_Y), pygame.RESIZABLE)
 
 
 def main():
