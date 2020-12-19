@@ -22,9 +22,7 @@ class Game:
 
         self.game_folder = os.path.dirname(__file__)
         self.clock = pygame.time.Clock()
-        self.screen = screen = pygame.display.set_mode(
-            (settings.RESOLUTION_X, settings.RESOLUTION_Y)
-        )
+        self.fullscreen_toggle(fullscreen=True)
 
         self.load_data()
 
@@ -87,11 +85,24 @@ class Game:
                 if event.key == pygame.K_ESCAPE:
                     self.quit()
 
+                if event.key == pygame.K_F11:
+                    if self.fullscreen:
+                        self.fullscreen_toggle(fullscreen=False)
+                    else:
+                        self.fullscreen_toggle(fullscreen=True)
+
     def show_start_screen(self):
         pass
 
     def show_go_screen(self):
         pass
+
+    def fullscreen_toggle(self, fullscreen=True):
+        self.fullscreen = fullscreen
+        if self.fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((settings.RESOLUTION_X, settings.RESOLUTION_Y), pygame.RESIZABLE)
 
 
 def main():
