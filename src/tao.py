@@ -70,20 +70,8 @@ class Game:
         self.camera.update(self.player)
         self.all_sprites.update()
 
-    def draw_grid(self):
-        for x in range(0, settings.RESOLUTION_X, settings.TILESIZE):
-            pygame.draw.line(
-                self.screen, colors.LIGHTGRAY, (x, 0), (x, settings.RESOLUTION_Y)
-            )
-
-        for y in range(0, settings.RESOLUTION_Y, settings.TILESIZE):
-            pygame.draw.line(
-                self.screen, colors.LIGHTGRAY, (0, y), (settings.RESOLUTION_X, y)
-            )
-
     def draw(self):
         self.screen.fill(pygame.Color(colors.BG_COLOR))
-        self.draw_grid()
 
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
