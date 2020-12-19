@@ -70,24 +70,39 @@ class Player(pygame.sprite.Sprite):
             )
             self.move_right_textures.append(sprite)
 
-    def __get_keys(self):
-        self.vx = 0
-        self.vy = 0
-
+    def move(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        left_keys = keys[pygame.K_LEFT] or keys[pygame.K_a]
+        right_keys = keys[pygame.K_RIGHT] or keys[pygame.K_d]
+        up_keys = keys[pygame.K_UP] or keys[pygame.K_w]
+        down_keys = keys[pygame.K_DOWN] or keys[pygame.K_s]
+
+        # If inertia is present, don't just zero out velocities
+        if player_settings.INERTIA:
+            self.vx *= player_settings.INERTIA_COEFFICIENT
+            self.vy *= player_settings.INERTIA_COEFFICIENT
+        else:
+            self.vx = 0
+            self.vy = 0
+
+        if left_keys:
             self.vx = -player_settings.PLAYER_SPEED
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        if right_keys:
             self.vx = player_settings.PLAYER_SPEED
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
+        if up_keys:
             self.vy = -player_settings.PLAYER_SPEED
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        if down_keys:
             self.vy = player_settings.PLAYER_SPEED
 
         # If moving diagonally, multiply velocity for both coordinates by
         # $\frac{1}{\sqrt{2}}$, or 0.7071
-        if self.vx != 0 and self.vy != 0:
+        if (
+            (down_keys and left_keys)
+            or (down_keys and right_keys)
+            or (up_keys and left_keys)
+            or (up_keys and right_keys)
+        ):
             self.vx *= 0.7071
             self.vy *= 0.7071
 
@@ -117,7 +132,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y = self.y
 
     def update(self):
-        self.__get_keys()
+        self.move()
 
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
