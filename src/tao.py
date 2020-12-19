@@ -8,7 +8,7 @@ import config.settings as settings
 import player
 import player.camera as player_camera
 import world
-import world.tile.wall as wall
+import world.tile as tile
 from framework.logger import logger
 
 
@@ -40,10 +40,10 @@ class Game:
         self.walls = pygame.sprite.Group()
 
         for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                if tile == "l":
-                    wall.Wall(self, col, row)
-                if tile == "P":
+            for col, t in enumerate(tiles):
+                if t == "l":
+                    tile.Tile(self, col, row)
+                if t == "P":
                     self.player = player.Player(self, 1, 1)
 
         self.camera = player_camera.Camera(self.map.width, self.map.height)
