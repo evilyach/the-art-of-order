@@ -1,26 +1,40 @@
 import pygame
 
 import config.settings as settings
+import config.world as world_settings
+import player
+import world.tile.grass as grass_tile
+import world.tile.stone_brick as stone_brick_tile
 from framework.logger import logger
+from framework.spritesheet import SpriteSheet
 
 
 class World:
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, game):
+        self.game = game
+        self.width = world_settings.WIDTH * settings.TILESIZE
+        self.height = world_settings.HEIGHT * settings.TILESIZE
 
-        logger.info("Creating world from {}".format(settings.MAP_PATH))
-        self.data = []
+        self.generate()
 
-        with open(self.filename, "rt") as f:
-            for line in f:
-                self.data.append(line.strip())
+    def generate(self):
+        """ Generates world with different tile objects. """
 
-        if len(self.data) == 0:
-            logger.error("Could not load data from from {}".format(settings.MAP_PATH))
+        image = SpriteSheet("src/static/sprites/spritesheet.png")
 
-        self.tilewidth = len(self.data[0])
-        self.tileheigth = len(self.data)
-        self.width = self.tilewidth * settings.TILESIZE
-        self.height = self.tileheigth * settings.TILESIZE
+        # Fill world with grass
+        for x in range(world_settings.WIDTH):
+            for y in range(world_settings.HEIGHT):
+                grass_tile.DuskGrassTile(self.game, x, y, image)
 
-        logger.info("Successfully created world from {}".format(settings.MAP_PATH))
+        # Create unescapable border
+        for x in range(world_settings.WIDTH + 1):
+            stone_brick_tile.StoneBrickWhiteTile(self.game, x, 0, image)
+            stone_brick_tile.StoneBrickWhiteTile(
+                self.game, x, world_settings.HEIGHT, image
+            )
+        for y in range(world_settings.HEIGHT + 1):
+            stone_brick_tile.StoneBrickWhiteTile(self.game, 0, y, image)
+            stone_brick_tile.StoneBrickWhiteTile(
+                self.game, world_settings.WIDTH, y, image
+            )

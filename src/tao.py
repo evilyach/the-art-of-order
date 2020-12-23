@@ -5,10 +5,10 @@ import pygame
 
 import config.colors as colors
 import config.settings as settings
+import config.world as world_settings
 import player
 import player.camera as player_camera
 import world
-import world.tile as tile
 from framework.logger import logger
 
 
@@ -29,9 +29,7 @@ class Game:
         logger.info("Initialized game")
 
     def load_data(self):
-        logger.info("Loading data from {}".format(settings.MAP_PATH))
-        filename = os.path.join(self.game_folder, settings.MAP_PATH)
-        self.map = world.World(filename)
+        pass
 
     def new(self):
         logger.info("Initializing new game objects")
@@ -39,13 +37,10 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
-        for row, tiles in enumerate(self.map.data):
-            for col, t in enumerate(tiles):
-                if t == "l":
-                    tile.Tile(self, col, row)
-                if t == "P":
-                    self.player = player.Player(self, 1, 1)
-
+        self.map = world.World(self)
+        self.player = player.Player(
+            self, world_settings.WIDTH / 2, world_settings.HEIGHT / 2
+        )
         self.camera = player_camera.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -102,7 +97,9 @@ class Game:
         if self.fullscreen:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         else:
-            self.screen = pygame.display.set_mode((settings.RESOLUTION_X, settings.RESOLUTION_Y), pygame.RESIZABLE)
+            self.screen = pygame.display.set_mode(
+                (settings.RESOLUTION_X, settings.RESOLUTION_Y), pygame.RESIZABLE
+            )
 
 
 def main():
