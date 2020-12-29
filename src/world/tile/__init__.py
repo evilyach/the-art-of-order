@@ -5,7 +5,7 @@ import config.settings as settings
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, texture, collidable=True):
+    def __init__(self, game, x, y, texture, collidable=True, xflip=False, yflip=False):
         """Initialize a tile.
 
         Keyword arguments:
@@ -17,8 +17,10 @@ class Tile(pygame.sprite.Sprite):
           - image (pygame.Surface) -- sprite that should be placed inside tile
           - texture_x (int) -- the x coordinate of a sprite on a spritesheet
           - texture_y (int) -- the y coordinate of a sprite on a spritesheet
-        collidable=True (bool) -- Can player and other entites collide with
+        collidable=True (bool) -- can player and other entites collide with
             a tile
+        xflip (bool) -- if tile needs to be flipped by x axis
+        yflip (bool) -- if tile needs to be flipped by y axis
 
         This generates a tile in the world. You need to pass information about
         its position and its properties.
@@ -29,16 +31,17 @@ class Tile(pygame.sprite.Sprite):
         else:
             self.groups = game.all_sprites
 
-        self.sprite_tilesize = 32
         pygame.sprite.Sprite.__init__(self, self.groups)
 
         self.game = game
         self.x = x
         self.y = y
+        self.xflip = xflip
+        self.yflip = yflip
 
         (image, texture_x, texture_y) = texture
         self.image = self.load_texture(
-            image, texture_x * self.sprite_tilesize, texture_y * self.sprite_tilesize
+            image, texture_x * settings.TILESIZE, texture_y * settings.TILESIZE
         )
         self.rect = self.image.get_rect()
 
@@ -49,6 +52,13 @@ class Tile(pygame.sprite.Sprite):
         """ Load a texture from an image from (x, y) coordinates. """
 
         return pygame.transform.scale(
-            image.get_image(x, y, self.sprite_tilesize, self.sprite_tilesize),
+            image.get_image(
+                x,
+                y,
+                settings.TILESIZE,
+                settings.TILESIZE,
+                xflip=self.xflip,
+                yflip=self.yflip,
+            ),
             (settings.TILESIZE, settings.TILESIZE),
         )
