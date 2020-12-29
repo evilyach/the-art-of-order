@@ -2,7 +2,7 @@
 
 # Defining variables
 VENV_DIR=".env"
-IMPLEMENTATION="python3"
+IMPLEMENTATION="python3.9"
 
 # Creating and(or) entering virtual environment
 if [ ! -d "$VENV_DIR" ]; then
@@ -14,11 +14,10 @@ source "$VENV_DIR"/bin/activate
 echo "Successfully entered"
 
 # Installing system dependencies
-pip install "pip==20.2.3" \
-	"poetry==1.1.0"
+pip install "pip==20.3.3"
 
 # Installing dependencies specified in pyproject.toml file
-poetry install
+pip install -r requirements.txt
 
 # Post-install handling
 deactivate

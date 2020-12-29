@@ -1,14 +1,12 @@
 # Creating virtual environment
-python.exe -m venv .env
-
+python -m venv .env
 ./.env/scripts/activate.ps1
 
 # Installing system dependencies
-.\.env\Scripts\python.exe -m pip install "pip==20.2.3" `
-    "poetry==1.1.0"
+.\.env\Scripts\python.exe -m pip install "pip==20.3.3"
 
-# Installing dependencies specified in pyproject.toml file
-.\.env\Scripts\python.exe -m poetry install
+# Installing dependencies specified in requirements.txt file
+.\.env\Scripts\python.exe -m pip install -r .\requirements.txt
 
 # Post-install handling
 deactivate
