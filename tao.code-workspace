@@ -7,5 +7,17 @@
 	"settings": {
 		"workbench.tree.indent": 16,
 		"explorer.compactFolders": false
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Python: Текущий файл",
+				"type": "python",
+				"request": "launch",
+				"program": "./src/tao.py",
+				"console": "integratedTerminal"
+			}
+		]
 	}
 }
