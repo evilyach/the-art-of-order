@@ -45,28 +45,28 @@ class Player(pygame.sprite.Sprite):
         self.move_down_textures = []
         for x in range(0, 64, 16):
             sprite = pygame.transform.scale(
-                image.get_image(x, 0, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+                image.get_image(x, 0, 16, 16, xflip=False, yflip=True), (settings.TILESIZE, settings.TILESIZE)
             )
             self.move_down_textures.append(sprite)
 
         self.move_left_textures = []
         for x in range(0, 64, 16):
             sprite = pygame.transform.scale(
-                image.get_image(x, 16, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+                image.get_image(x, 16, 16, 16, xflip=False, yflip=False), (settings.TILESIZE, settings.TILESIZE)
             )
             self.move_left_textures.append(sprite)
 
         self.move_up_textures = []
         for x in range(0, 64, 16):
             sprite = pygame.transform.scale(
-                image.get_image(x, 32, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+                image.get_image(x, 32, 16, 16, xflip=False, yflip=False), (settings.TILESIZE, settings.TILESIZE)
             )
             self.move_up_textures.append(sprite)
 
         self.move_right_textures = []
         for x in range(0, 64, 16):
             sprite = pygame.transform.scale(
-                image.get_image(x, 48, 16, 16), (settings.TILESIZE, settings.TILESIZE)
+                image.get_image(x, 48, 16, 16, xflip=False, yflip=False), (settings.TILESIZE, settings.TILESIZE)
             )
             self.move_right_textures.append(sprite)
 

@@ -15,7 +15,8 @@ class SpriteSheet:
         y (int) -- the y coordinate where image shall be extracted
         width (int) -- the width of the image that shall be extracted
         height (int) -- the height of the image that shall be extracted
-        flip_x
+        xflip (bool) -- if tile needs to be flipped by x axis
+        yflip (bool) -- if tile needs to be flipped by y axis
 
         Returns:
         image (pygame.Surface) -- sprite that was extracted
