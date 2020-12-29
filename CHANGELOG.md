@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add ability to rotate texture.
 
 ### Changed
+
+- Update `python` from 3.8 to 3.9.
+- Update `isort` from 5.5.4 to 5.6.4.
+- Update `colorlog` from 4.4.0 to 4.6.2.
+- Update `pygame` from 2.0.0dev12 to 2.0.1.
+- Update `pyinstaller` from 4.0 to 4.1.
+
+
 ### Deprecated
 ### Removed
 ### Fixed
