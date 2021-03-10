@@ -1,4 +1,4 @@
-# The Art of Order
+# 𝖙𝖍𝖊 𝖆𝖗𝖙 𝖔𝖋 𝖔𝖗𝖉𝖊𝖗
 
 Game about order and chaos ⚖️
 
